@@ -14,7 +14,7 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 INVESTMENT_DIR = REPO_ROOT / "investment"
 
 FEISHU_WEBHOOK = "https://open.feishu.cn/open-apis/bot/v2/hook/296343c1-db65-4597-9ff2-f28017f0aff6"
-VERCEL_BASE_URL = "https://claude-test-jet-two.vercel.app"
+VERCEL_BASE_URL = "https://claude-test-blush.vercel.app"
 
 
 def main() -> None:
