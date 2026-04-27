@@ -4,15 +4,17 @@
   const nextBtn = document.getElementById("next-btn");
   const contentEl = document.getElementById("content");
   let dates = [];
+  let data = {};
   let currentIndex = 0;
 
   async function init() {
     try {
-      const res = await fetch("/api/reports");
-      const data = await res.json();
-      dates = data.reports || [];
+      const res = await fetch("/reports.json");
+      const json = await res.json();
+      dates = json.reports || [];
+      data = json.data || {};
     } catch {
-      contentEl.innerHTML = '<p class="error-msg">无法加载日报列表</p>';
+      contentEl.innerHTML = '<p class="error-msg">无法加载日报数据</p>';
       return;
     }
 
@@ -28,67 +30,53 @@
       select.appendChild(opt);
     });
 
-    // Check URL hash for date
     const hashDate = location.hash.replace("#date=", "");
     const hashIdx = dates.indexOf(hashDate);
-    if (hashIdx !== -1) {
-      currentIndex = hashIdx;
-    }
+    if (hashIdx !== -1) currentIndex = hashIdx;
 
     select.addEventListener("change", () => {
       currentIndex = dates.indexOf(select.value);
       if (currentIndex === -1) currentIndex = 0;
-      loadReport(dates[currentIndex]);
+      showReport(dates[currentIndex]);
     });
 
     prevBtn.addEventListener("click", () => {
       if (currentIndex < dates.length - 1) {
         currentIndex++;
-        loadReport(dates[currentIndex]);
+        showReport(dates[currentIndex]);
       }
     });
 
     nextBtn.addEventListener("click", () => {
       if (currentIndex > 0) {
         currentIndex--;
-        loadReport(dates[currentIndex]);
+        showReport(dates[currentIndex]);
       }
     });
 
-    loadReport(dates[currentIndex]);
+    showReport(dates[currentIndex]);
   }
 
-  async function loadReport(date) {
+  function showReport(date) {
     select.value = date;
     location.hash = `date=${date}`;
     prevBtn.disabled = currentIndex >= dates.length - 1;
     nextBtn.disabled = currentIndex <= 0;
-    contentEl.innerHTML = '<p class="loading">加载中...</p>';
 
-    try {
-      const res = await fetch(`/api/reports?date=${date}`);
-      if (!res.ok) throw new Error("not found");
-      const data = await res.json();
-      renderMarkdown(data.content);
-    } catch {
+    const content = data[date];
+    if (!content) {
       contentEl.innerHTML = '<p class="error-msg">该日期暂无日报</p>';
+      return;
     }
-  }
-
-  function renderMarkdown(text) {
     if (typeof marked !== "undefined") {
-      contentEl.innerHTML = marked.parse(text);
+      contentEl.innerHTML = marked.parse(content);
     } else {
-      // Fallback: simple pre-formatted rendering
-      contentEl.innerHTML = `<pre style="white-space:pre-wrap;font-size:14px;">${escapeHtml(text)}</pre>`;
+      contentEl.innerHTML = `<pre style="white-space:pre-wrap;font-size:14px;">${escapeHtml(content)}</pre>`;
     }
   }
 
   function escapeHtml(s) {
-    return s
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;");
+    return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
   }
 
   init();
