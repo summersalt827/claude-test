@@ -1,0 +1,5 @@
+.vercel
+.claude/
+.cursor/
+ANTHROPIC_AUTH_TOKEN*.txt
+.DS_Store

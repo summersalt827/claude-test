@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>投资日报</title>
+  <link rel="stylesheet" href="/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js" defer></script>
+</head>
+<body>
+  <header class="top-bar">
+    <h1>投资日报</h1>
+    <div class="date-nav">
+      <button id="prev-btn" aria-label="前一天">&larr;</button>
+      <select id="date-select" aria-label="选择日期"></select>
+      <button id="next-btn" aria-label="后一天">&rarr;</button>
+    </div>
+  </header>
+  <main id="content" class="report-body">
+    <p class="loading">加载中...</p>
+  </main>
+  <script src="/app.js"></script>
+</body>
+</html>
