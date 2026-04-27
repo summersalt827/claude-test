@@ -70,6 +70,16 @@ push_to_feishu() {
   return 1
 }
 
+push_email() {
+  if /usr/bin/env python3 "$SCRIPT_DIR/send_investment_email.py"; then
+    echo "$LOG_PREFIX email push success"
+    return 0
+  fi
+  echo "$LOG_PREFIX email push failed"
+  notify_user "投资日报邮件推送失败" "日报已生成，但邮件发送失败，请检查日志。"
+  return 1
+}
+
 echo "$LOG_PREFIX start $(date '+%Y-%m-%d %H:%M:%S')"
 
 attempt=1
@@ -86,6 +96,7 @@ while [ "$attempt" -le "$MAX_RETRIES" ]; do
         fi
       fi
       push_to_feishu || true
+      push_email || true
       exit 0
     fi
   else
@@ -99,6 +110,7 @@ while [ "$attempt" -le "$MAX_RETRIES" ]; do
         fi
       fi
       push_to_feishu || true
+      push_email || true
       exit 0
     fi
   fi
