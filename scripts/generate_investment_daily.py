@@ -97,6 +97,100 @@ def load_investing_summary() -> list[str]:
     return bullets
 
 
+def load_self_selected_funds() -> list[str]:
+    """从 investing.md 提取自选基金代码列表。"""
+    if not INVESTING_PREF_PATH.is_file():
+        return []
+    lines = INVESTING_PREF_PATH.read_text(encoding="utf-8").splitlines()
+    funds: list[str] = []
+    in_self_selected = False
+    for raw in lines:
+        line = raw.strip()
+        if "自选基金" in line:
+            in_self_selected = True
+            continue
+        if in_self_selected:
+            if line.startswith("- ") or line.startswith("* "):
+                import re
+                m = re.search(r"(\d{6})", line)
+                if m:
+                    funds.append(m.group(1))
+            elif line.startswith("#") or (line and not line.startswith("-") and not line.startswith("*") and not line.startswith(" ")):
+                break
+    return funds
+
+
+def fetch_fund_nav(fund_code: str) -> tuple[dict | None, str | None]:
+    """通过东方财富接口获取基金最新净值。"""
+    try:
+        url = f"https://fund.eastmoney.com/pingzhongdata/{fund_code}.js"
+        data = retry_call(lambda: fetch_text(url, encoding="utf-8"))
+        import re
+        # 提取基金名称
+        name_match = re.search(r'fS_name\s*=\s*"([^"]+)"', data)
+        name = name_match.group(1) if name_match else "未知基金"
+        # 提取最新净值
+        nav_match = re.search(r'fS_code\s*=\s*"([^"]+)"', data)
+        nav_code = nav_match.group(1) if nav_match else fund_code
+        # 提取净值走势（最新一条）
+        nav_list_match = re.search(r'Data_netWorthTrend\s*=\s*\[(.*?)\];', data, re.DOTALL)
+        if nav_list_match:
+            import json as _json
+            nav_data = _json.loads(f"[{nav_list_match.group(1)}]")
+            if nav_data:
+                latest = nav_data[-1]
+                nav_date_ts = latest.get("x", 0) / 1000
+                import datetime as _dt
+                nav_date = _dt.datetime.fromtimestamp(nav_date_ts).strftime("%Y-%m-%d")
+                nav = latest.get("y", "N/A")
+                # 计算涨跌幅
+                if len(nav_data) >= 2:
+                    prev = nav_data[-2].get("y", 0)
+                    if prev and prev != 0:
+                        growth_rate = f"{((nav - prev) / prev * 100):.2f}"
+                    else:
+                        growth_rate = "N/A"
+                else:
+                    growth_rate = "N/A"
+                return {
+                    "code": nav_code,
+                    "name": name,
+                    "nav": f"{nav:.4f}",
+                    "nav_date": nav_date,
+                    "growth_rate": growth_rate,
+                }, None
+        return None, f"基金 {fund_code} 净值数据解析失败"
+    except Exception as e:
+        return None, f"基金 {fund_code} 抓取失败: {e}"
+
+
+def build_self_selected_section(funds: list[str]) -> list[str]:
+    """构建自选基金分析板块内容。"""
+    if not funds:
+        return ["- 当前未配置自选基金，请在 investing.md 的「自选基金」中添加。"]
+
+    lines: list[str] = []
+    for code in funds:
+        info, err = fetch_fund_nav(code)
+        if info:
+            growth_rate = info.get("growth_rate", "N/A")
+            try:
+                rate_val = float(growth_rate)
+                if rate_val > 0:
+                    trend = "🟢 上涨"
+                elif rate_val < 0:
+                    trend = "🔴 下跌"
+                else:
+                    trend = "⚪ 平盘"
+            except (ValueError, TypeError):
+                trend = "⚪ 未知"
+            lines.append(f"- **{info['name']}**（{info['code']}）：最新净值 {info['nav']}（{info['nav_date']}），近期涨跌 {growth_rate}% {trend}")
+        else:
+            lines.append(f"- **{code}**：{err}")
+
+    return lines
+
+
 def load_news_hint(today: str) -> list[str]:
     news_path = DAILY_NEWS_DIR / f"{today}.md"
     if not news_path.is_file():
@@ -332,13 +426,16 @@ def build_report(
     errors: list[str],
 ) -> str:
     now_str = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
-    pref = "\n".join(load_investing_summary())
     news_hints = load_news_hint(today)
     market = "\n".join(format_market_summary(indices, northbound))
     actions = "\n".join(build_action_suggestions(indices, northbound))
     risk_line = "- 数据抓取存在部分失败，请在实盘前二次确认关键指标。"
     if not errors:
         risk_line = "- 自动采集正常完成，仍需结合盘中量价变化动态调整。"
+
+    # 自选基金分析
+    self_selected_funds = load_self_selected_funds()
+    self_selected = "\n".join(build_self_selected_section(self_selected_funds))
 
     return f"""# A股投资建议 - {today}
 
@@ -358,8 +455,8 @@ def build_report(
 - 交易风险：若出现放量下跌或高开低走，优先执行减仓和风控纪律。
 {risk_line}
 
-## 💡 投资逻辑（来自 investing.md）
-{pref}
+## 📈 自选基金分析
+{self_selected}
 
 ## 📰 当日新闻线索（来自 daily_news）
 {chr(10).join(news_hints)}
