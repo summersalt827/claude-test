@@ -371,6 +371,32 @@ def build_report(
 """
 
 
+def update_reports_json(today: str, content: str) -> None:
+    """将当日日报内容追加到 public/reports.json，供前端页面读取。"""
+    reports_json_path = REPO_ROOT / "public" / "reports.json"
+    data: dict = {"reports": [], "data": {}}
+    if reports_json_path.is_file():
+        try:
+            data = json.loads(reports_json_path.read_text(encoding="utf-8"))
+        except (json.JSONDecodeError, OSError):
+            pass
+
+    reports_list: list[str] = data.get("reports", [])
+    data_map: dict[str, str] = data.get("data", {})
+
+    data_map[today] = content
+    if today not in reports_list:
+        reports_list.insert(0, today)
+
+    data["reports"] = reports_list
+    data["data"] = data_map
+    reports_json_path.write_text(
+        json.dumps(data, ensure_ascii=False, indent=2),
+        encoding="utf-8",
+    )
+    print(f"Updated reports.json with {today}")
+
+
 def main() -> None:
     today = datetime.date.today().isoformat()
     force = os.getenv("INVESTMENT_FORCE", "0") == "1"
@@ -391,6 +417,10 @@ def main() -> None:
         build_report(today, indices, northbound, errors),
         encoding="utf-8",
     )
+
+    # 同步更新 public/reports.json，供前端页面展示
+    update_reports_json(today, output_path.read_text(encoding="utf-8"))
+
     print(f"Generated: {output_path}")
     print(f"Raw capture: {raw_path}")
 
