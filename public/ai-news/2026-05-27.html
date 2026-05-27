@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI News 双语日报 - 2026年05月27日</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+               "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", sans-serif;
+  background: #f5f5f5; color: #333; line-height: 1.8;
+}
+.container { max-width: 800px; margin: 0 auto; padding: 24px 20px 60px; }
+.header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #fff; padding: 48px 32px; border-radius: 16px; margin-bottom: 32px;
+  text-align: center;
+}
+.header h1 { font-size: 28px; font-weight: 700; margin-bottom: 8px; }
+.header .date { font-size: 14px; opacity: 0.85; }
+.header .badge {
+  display: inline-block; background: rgba(255,255,255,0.2);
+  padding: 4px 14px; border-radius: 20px; font-size: 12px;
+  margin-top: 12px;
+}
+.email-card {
+  background: #fff; border-radius: 12px; padding: 32px;
+  margin-bottom: 24px; box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+.email-card h2 {
+  font-size: 20px; color: #333; margin-bottom: 12px;
+  padding-bottom: 12px; border-bottom: 2px solid #f0f0f0;
+}
+.email-meta {
+  display: flex; gap: 16px; flex-wrap: wrap; font-size: 13px;
+  color: #888; margin-bottom: 24px;
+}
+.email-meta span { display: inline-flex; align-items: center; gap: 4px; }
+.content-block { margin-bottom: 20px; }
+.content-block .original {
+  background: #f8f9fa; border-left: 3px solid #667eea;
+  padding: 12px 16px; border-radius: 0 8px 8px 0; margin-bottom: 8px;
+  color: #555; font-style: italic;
+}
+.content-block .translation {
+  padding: 8px 16px; color: #333;
+}
+.footer {
+  text-align: center; color: #aaa; font-size: 12px;
+  margin-top: 40px; padding-top: 20px; border-top: 1px solid #eee;
+}
+.tag {
+  display: inline-block; padding: 2px 10px; border-radius: 4px;
+  font-size: 11px; font-weight: 600; margin-right: 6px;
+}
+.tag-en { background: #e3f2fd; color: #1976d2; }
+.tag-zh { background: #fce4ec; color: #c62828; }
+.divider {
+  text-align: center; color: #ddd; margin: 20px 0;
+  font-size: 18px; letter-spacing: 8px;
+}
+@media (max-width: 600px) {
+  .container { padding: 12px 12px 40px; }
+  .header { padding: 32px 20px; border-radius: 12px; }
+  .header h1 { font-size: 22px; }
+  .email-card { padding: 20px; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="header">
+<h1>AI News 双语日报</h1>
+<div class="date">2026年05月27日</div>
+<div class="badge">1 封 AI 新闻邮件 · 中英对照</div>
+</div>
+<div class="email-card">
+<h2>[AINews] New AI Infra decacorns: Fireworks, Baseten (with OpenRouter on the
+ way)</h2>
+<div class="email-meta">
+<span>发件人: AINews &lt;swyx+ainews@substack.com&gt;</span>
+<span>2026-05-27 03:33</span>
+</div>
+<div class="content-block">
+<div class="original"><span class="tag tag-en">EN</span> With the pace of AI fundraising these days, our general policy is to only cover startups when they cross decacorn status (&gt;$10B) - but only when confirmed, and today’s news of Fireworks’ $15B round (“in talks”, 3.75x in 7 months, our podcast here) and Baseten’s $11B round (“is raising”, 2.2x in 3 months) is a bit premature, but the pace of the pickup in Inference land and unicorn to decacorn progression is too juicy not to serve as headline story today, with the $113M OpenRouter Series C (5x volume in 6 months) as the cherry on top: if you are gonna do multimodel inference, you are gonna need a router.</div>
+<div class="translation"><span class="tag tag-zh">中</span> 推理初创公司融资扎堆冲击百亿美元估值：Fireworks 正在洽谈 150 亿美元估值的新一轮融资（7 个月内估值增长 3.75 倍），Baseten 同样以 110 亿美元估值筹集资金（3 个月内增长 2.2 倍）。更成熟的多模型路由平台 OpenRouter 则以 1.13 亿美元的 C 轮融资（6 个月内 token 量增长 5 倍）做实了推理层的平台价值——如果要做多模型推理，路由器必不可少。</div>
+</div>
+<div class="content-block">
+<div class="translation">📌 背景: 这波推理基础设施的融资潮延续了2026年初以来推理侧（inference）受资本追捧的趋势，反映市场认为调用/调度大模型的基础设施本身会变成比单个模型更持久的生意。Fireworks 和 Baseten 均提供快速推理服务，而 OpenRouter 更侧重多模型统一路由与计费，其增长数据直接证明了开源和闭源模型混合使用已成为开发常态。此前一周 Latent Space 刚报道过推理基建升温，本期则用估值跨越印证了这一判断。</div>
+</div>
+<div class="content-block">
+<div class="original"><span class="tag tag-en">EN</span> Several posts converged on the same thesis: the winning stack is now model + harness + eval loop, not just a stronger base model. A long Zhihu summary argued that DeepSeek is explicitly building a harness team to close the loop between model outputs, runtime feedback, validation, and correction, with a claimed cached-input cost advantage that would support tighter interaction/verification loops.</div>
+<div class="translation"><span class="tag tag-zh">中</span> 业界共识：编码 Agent 的竞争壁垒已从模型本身转向“模型 + harness（执行环境）+ 评估回路”。一篇知乎长文指出，DeepSeek 正专门组建 harness 团队，在模型输出、运行时反馈、验证和修正之间形成闭环，并通过缓存输入等方式降低交互成本，支撑更紧密的验证迭代。</div>
+</div>
+<div class="content-block">
+<div class="translation">📌 背景: “Harness” 指为模型提供沙盒执行、工具调用、错误捕获和记忆管理等能力的外围系统。从 DeepSeek、Google 到 LangChain 都意识到，仅靠更强的基座模型已无法拉开差距；控制上下文窗口、规划与重试等工程能力成为编码 Agent 实际效率的关键。该趋势与去年起 Agent 框架大爆发一脉相承，但近期重点已从“Agent 原型”转向“工程化 harness”的生产可靠性。</div>
+</div>
+<div class="content-block">
+<div class="original"><span class="tag tag-en">EN</span> DeepSWE, introduced as a new benchmark for agentic coding, got strong endorsement from practitioners; @theo called it “the first code bench that actually aligns with how it feels to use these models coding.”</div>
+<div class="translation"><span class="tag tag-zh">中</span> DeepSWE 作为新的 Agent 编码基准获得开发者高度认可，@theo 称其是“第一个真正匹配实际编码体验的基准”，并且在高端模型间制造了比常见的 SWE 榜单更大的分数梯度。</div>
+</div>
+<div class="content-block">
+<div class="translation">📌 背景: 此前 SWE-bench 等基准被批评与实际开发感受脱节，模型分数趋同。DeepSWE 的出现标志着评估正从“能否完成被隔离的修复任务”转向“能否处理真实工程场景的复杂交互”，有助于区分头部模型的实战能力。Claude Opus 4.6 等前沿模型在该基准上依然领先，但 Qwen3.7 Max 等新模型也展示出竞争力。</div>
+</div>
+<div class="content-block">
+<div class="original"><span class="tag tag-en">EN</span> The paper “Language Models Need Sleep” got notable attention. The mechanism is a sleep-like consolidation phase where recent context is converted into persistent fast weights before clearing the KV cache, moving compute into an offline pass while preserving wake-time latency.</div>
+<div class="translation"><span class="tag tag-zh">中</span> 论文《语言模型需要睡眠》提出一种将近期上下文在“睡眠”阶段转化为持久快速权重的机制，然后清空 KV 缓存，把计算移到离线阶段，从而保持唤醒时低延迟，并利用长时记忆压缩解决 Agent 长轨迹的上下文窗口瓶颈。</div>
+</div>
+<div class="content-block">
+<div class="translation">📌 背景: 长期记忆与上下文窗口膨胀是 AI Agent 执行长任务的重大瓶颈。传统做法是扩大 KV 缓存或使用外部记忆，但资源消耗大。该论文借鉴生物睡眠的记忆巩固，将压缩计算离线化，与之前 Anthropic 在 Claude 上探索的“Dream”记忆功能思路类似，都是通过非实时的权重更新来扩展有效上下文。</div>
+</div>
+<div class="content-block">
+<div class="original"><span class="tag tag-en">EN</span> MiniMax teased M3 as open source, and follow-on technical commentary suggested a new block-sparse two-stage attention path. @kimmonismus summarized the reported speedups: 9.7× prefilling and 15.6× decoding at 1M tokens versus M2.</div>
+<div class="translation"><span class="tag tag-zh">中</span> MiniMax 预告将开源 M3 模型，技术评论指出其采用了一种新的块稀疏两阶段注意力路径，相比 M2 在 1M token 长度下预填充速度提升 9.7 倍，解码速度提升 15.6 倍。</div>
+</div>
+<div class="content-block">
+<div class="translation">📌 背景: MiniMax 此前已推出 M2 系列在长上下文和稀疏注意力上有不错表现。M3 进一步将 GQA 和真实 KV 块选择结合，区别于 DeepSeek 的压缩注意力变体，是稀疏注意力架构竞争中的又一方向。这类模型对于需要海量上下文注入的逻辑推理和长文档处理场景十分关键。</div>
+</div>
+<div class="content-block">
+<div class="original"><span class="tag tag-en">EN</span> Huawei’s “A Time Scaling Theory for Multi-Layer Electronic Systems” should be interpreted as a strategic manifesto / white paper. The core proposal is to treat time constant τ, not process node, as the unifying metric across device, chip, and datacenter scales.</div>
+<div class="translation"><span class="tag tag-zh">中</span> 华为发布的“多层电子系统时间缩放理论”更应被看作战略白皮书，核心主张是以时间常数 τ 而非制程节点，作为跨越器件、芯片和数据中心维度的统一性能度量，并基于此提出 LogicFolding 等技术概念，为未来 Kirin 芯片规划密度、能效和频率的提升路径。</div>
+</div>
+<div class="content-block">
+<div class="translation">📌 背景: 在美国出口管制限制先进制程获取的背景下，华为试图通过架构和封装创新绕开对制程微缩的依赖，τ 缩放理论本质是一个非传统摩尔定律的工程宣言。此前英伟达也强调 Blackwell 相对 Hopper 的性能提升主要来自非制程优化，华为这一提法与之呼应，但尚缺芯片实物验证。</div>
+</div>
+<div class="content-block">
+<div class="original"><span class="tag tag-en">EN</span> SemiAnalysis published on the 800VDC transition, and John Carmack recommended it, highlighting crossovers from EV power electronics into datacenter design, including high-voltage SiC parts.</div>
+<div class="translation"><span class="tag tag-zh">中</span> SemiAnalysis 发表关于数据中心 800V 直流过渡的研究，John Carmack 推荐该文章，并指出电动汽车电力电子（如高压 SiC 部件）正跨入数据中心设计。</div>
+</div>
+<div class="content-block">
+<div class="translation">📌 背景: 随着 AI 推理与训练功耗飙升，数据中心供电架构面临革新，从传统 48V 或 400V 直流向更高电压过渡可降低损耗、提升密度，直接复用了电动汽车行业的碳化硅等功率半导体技术。这与前几期讨论过的“AI 基础设施供应链”高度相关，也意味着未来 AI 算力的扩张可能受限于电力电子产能。</div>
+</div>
+<div class="content-block">
+<div class="original"><span class="tag tag-en">EN</span> vLLM merged a Rust frontend as a drop-in alternative to the Python API server, with early numbers showing ~837 req/s vs ~162 req/s on a preprocess-heavy workload in a single process.</div>
+<div class="translation"><span class="tag tag-zh">中</span> vLLM 合并了一个用 Rust 编写的前端，可直替 Python API 服务，初步测试显示在预处理密集型负载下单进程吞吐量从约 162 请求/秒跃升至 837 请求/秒，大幅缓解了高吞吐场景的 CPU/API 瓶颈。</div>
+</div>
+<div class="content-block">
+<div class="translation">📌 背景: vLLM 是当前最广泛使用的开源大模型推理引擎之一，其 Python 服务端在处理预处理、调度等逻辑时会受限于 GIL 和单进程性能。Rust 前端通过重写关键路径显著降低了开销，这对于承接大规模在线推理服务（如 OpenRouter 所需）的公司尤为重要，是推理栈“系统优化纵深”的标志。</div>
+</div>
+<div class="content-block">
+<div class="original"><span class="tag tag-en">EN</span> OpenRouter announced a $113M Series B and said weekly volume had grown from 5T to 25T tokens over six months.</div>
+<div class="translation"><span class="tag tag-zh">中</span> OpenRouter 完成 1.13 亿美元 B 轮融资，其每周 token 处理量在六个月内从 5 万亿增长至 25 万亿，翻了五倍。</div>
+</div>
+<div class="content-block">
+<div class="translation">📌 背景: OpenRouter 作为多模型统一路由和计费平台，本质上是一个“模型路由器”，解决了开发者不断组合开源、闭源模型的需求。其数据充分证明了多模型推理正在快速成为主流工作流，也解释了为什么 Fireworks、Baseten 等推理后端和路由层公司估值飙升——市场认为模型的多样性是长期趋势，路由即是新入口。</div>
+</div>
+<div class="content-block">
+<div class="original"><span class="tag tag-en">EN</span> DeepSeek is reportedly advancing a $10.29B financing round, with founder Liang Wenfeng reiterating an AGI-oriented roadmap and a commitment to continue releasing/opening AI models rather than prioritizing near-term commercialization.</div>
+<div class="translation"><span class="tag tag-zh">中</span> DeepSeek 正推进规模达 102.9 亿美元的融资，创始人梁文锋重申专注于通用人工智能（AGI）路线图，将继续开源模型而非优先追求短期商业化。</div>
+</div>
+<div class="content-block">
+<div class="translation">📌 背景: DeepSeek 此前的低成本高性能模型曾在全球引起轰动，但在 GPU 出口管制下维持高速度迭代需要巨额资金。此次融资标志着开源前沿实验室即便在硬件受限下仍相信开放权重能加速通向 AGI，且与 Heretic 被 Meta 发函等事件形成反差——商业公司对开源生态</div>
+</div>
+</div>
+<div class="footer">
+<p>AI News 双语日报 · 自动生成于 2026年05月27日</p>
+</div>
+</div>
+</body>
+</html>
